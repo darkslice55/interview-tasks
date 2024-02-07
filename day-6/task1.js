@@ -12,7 +12,10 @@ function laugh(text = '') {
 
 
   function debounce(cb, wait) {
+    let timeoutId
+    
     return function(...args) {
-        setTimeout(() => cb(...args), wait)
+        if (timeoutId) clearTimeout(timeoutId)
+        timeoutId = setTimeout(() => cb(...args), wait)
     }
   }
