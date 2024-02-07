@@ -16,6 +16,9 @@ function laugh(text = '') {
     
     return function(...args) {
         if (timeoutId) clearTimeout(timeoutId)
-        timeoutId = setTimeout(() => cb(...args), wait)
+        timeoutId = setTimeout(() => {
+            cb.apply(this, args)
+            timeoutId = undefined
+        }, wait)
     }
   }
