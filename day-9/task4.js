@@ -1,37 +1,41 @@
 class Queue {
-    #arr
-    length = 0
+    #first
+    #last
 
     constructor() {
-        this.#arr = new Array()
+        this.#first = null
+        this.#last = null
+    }
+
+    isEmpty() {
+        return this.#first === null
     }
 
     push(item) {
-        this.#arr[this.length] = item
-        this.length++
+        const newData = {
+            value: item
+        }
+
+        if (this.isEmpty()) {
+            this.#first = newData
+        } else {
+            this.#last.next = newData
+        }
+
+        this.#last = newData
     }
 
     pop() {
-        const temp = this.#arr[0]
+        const temp = this.#first
 
-        for (let i = 0; i < this.length - 1; i++) {
-            this.#arr[i] = this.#arr[i + 1]
+        if (!this.#first?.next) {
+            this.#last = null    
         }
 
-        this.#arr[this.length - 1] = undefined
-        this.length--
+        this.#first = this.#first?.next
 
-        return temp
-    }
-
-    *[Symbol.iterator]() {
-        for(let i = 0; i < this.length; i++) {
-            yield this.#arr[i]
-        }
-    }
-
-    [Symbol.toPrimitive]() {
-        return `[${this.#arr.join(', ')}]`
+        return temp?.value ?? undefined
+        
     }
 
 }
